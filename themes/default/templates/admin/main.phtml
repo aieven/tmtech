@@ -1,0 +1,9 @@
+<h1>Здесь вам доступно:</h1>
+<ul>
+    <?php
+        $allPrivileges = \Cerceau\System\Registry::instance()->I18n()->pick( 'privileges', 'all' );
+        foreach( $d['privileges'] as $privilege ){
+            echo '<li>'.  $allPrivileges[$privilege] .'</li>';
+        }
+    ?>
+</ul>

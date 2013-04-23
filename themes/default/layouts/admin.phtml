@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php include $inject( 'head' ) ?>
+<body data-spy="scroll" class="admin">
+<?php include $inject( 'admin/menu' ) ?>
+<div class="container-fluid">
+    <?= $yield ?>
+</div>
+<?php include $inject( 'foot' ) ?>
+</body>
+</html>

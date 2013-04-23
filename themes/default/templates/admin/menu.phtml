@@ -1,0 +1,51 @@
+<?php
+    $menus = array(
+        array(
+            'page' => $Url->page( 'admin\\Users', 'users' ),
+            'name' => 'Пользователи',
+            'action' => \Cerceau\Data\User\Privileges::WATCH_USERS,
+        ),
+        array(
+            'page' => $Url->page( 'admin\\Snapshots', 'main' ),
+            'name' => 'Главный экран',
+            'action' => \Cerceau\Data\User\Privileges::MODERATION,
+        ),
+        array(
+            'page' => $Url->page( 'admin\\PeopleAndBrands', 'categories', array( 'partition' => 'people') ),
+            'name' => 'Люди',
+            'action' => \Cerceau\Data\User\Privileges::MODERATION,
+        ),
+        array(
+            'page' => $Url->page( 'admin\\Gallery', 'main' ),
+            'name' => 'Галереи',
+            'action' => \Cerceau\Data\User\Privileges::MODERATION,
+        ),
+        array(
+            'page' => $Url->page( 'admin\\PeopleAndBrands', 'categories', array( 'partition' => 'brands') ),
+            'name' => 'Бренды',
+            'action' => \Cerceau\Data\User\Privileges::MODERATION,
+        ),
+        array(
+            'page' => $Url->page( 'admin\\PeopleAndBrands', 'charts' ),
+            'name' => 'Чарты',
+            'action' => \Cerceau\Data\User\Privileges::MODERATION,
+        ),
+    );
+?>
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="/admin/"><span style="color:red">АД</span>минко</a>
+        <ul class="nav">
+            <?php
+                foreach( $menus as $menu ){
+                    if( $p['auth']->can( $menu['action'] )){
+                        echo '<li'
+                            . ( $menu['page'] === $globals['base_url'] ? ' class="active"' : '' )
+                            .'><a href="/'. $menu['page'] .'">'. $menu['name'] .'</a></li>';
+                    }
+                }
+            ?>
+            <li><a href="/<?= $Url->page( 'main', 'logout' ) ?>">Покинуть чертоги</a></li>
+        </ul>
+    </div>
+</div>

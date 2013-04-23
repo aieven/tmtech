@@ -1,0 +1,52 @@
+<ul class="breadcrumb">
+    <li class="active">Чарт по </li>
+    <li><a <?if($d['use_method'] == 0) echo 'class="active"'?> href="/<?= $Url->page( 'admin\\PeopleAndBrands', 'charts', array( 'use_method' => 0 )) ?>">
+        фолловерам</a></li><span class="divider">/</span></li>
+    <li><a <?if($d['use_method'] == 1) echo 'class="active"'?> href="/<?= $Url->page( 'admin\\PeopleAndBrands', 'charts', array( 'use_method' => 1 )) ?>">
+        лайкам</a></li><span class="divider">/</span></li>
+    <li><a <?if($d['use_method'] == 2) echo 'class="active"'?> href="/<?= $Url->page( 'admin\\PeopleAndBrands', 'charts', array( 'use_method' => 2 )) ?>">
+        комментариям</a></li>
+</ul>
+<div class="row-fluid">
+    <div class="span8">
+        <form action="/<?= $Url->form( 'admin\\PeopleAndBrands', 'saveChartsMethod' ) ?>" method="post" id="switchMethod">
+            <input type="hidden" name="use_method" value="<?= $d['use_method'] ?>">
+            <input type="submit" class="btn btn-primary" value="Сортировать по <?= $d['use_method_name'] ?>" />
+        </form>
+        <div>
+            <p>Текущая сортировка: по <span id="currentMethodName"><?= $d['current_method_name'] ?></span></p>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Аватар</th>
+                <th>Ник</th>
+                <th>Полное имя</th>
+                <th>Фолловеры</th>
+                <th>Фото</th>
+                <th>Лайки</th>
+                <th>Комменты</th>
+            </tr>
+            </thead>
+            <tbody id="publics">
+            <?php
+                if( !empty( $d['publics'] )){
+                    foreach ( $d['publics'] as $public ){
+                        echo <<<HTML
+                        <tr>
+                            <td><img class="img-rounded" src={$public['profile_picture']} /></td>
+                            <td>{$public['username']}</td>
+                            <td>{$public['full_name']}</td>
+                            <td>{$public['followers']}</td>
+                            <td>{$public['photos']}</td>
+                            <td>{$public['likes']}</td>
+                            <td>{$public['comments']}</td>
+                        </tr>
+HTML;
+                    }
+                }
+            ?>
+            </tbody>
+        </table>
+    </div>
+</div>

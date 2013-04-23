@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Content-Language: en
+Content-Type: application/json; charset=utf-8
+Date: Mon, 19 Nov 2012 13:11:59 GMT
+Server: nginx
+Vary: Accept-Language, Cookie, Accept-Encoding
+X-Ratelimit-Limit: 5000
+X-Ratelimit-Remaining: 4989
+Content-Length: 410
+Connection: keep-alive
+
+{"meta":{"code":200},"data":{"username":"in_world","bio":"in_gramed\nBest nature shots from all over the amazing world! This is inspirational public gallery for those who seek awesome places to visit one day!","website":"","profile_picture":"http:\/\/images.instagram.com\/profiles\/profile_245570352_75sq_1351761422.jpg","full_name":"","counts":{"media":93,"followed_by":11111,"follows":45},"id":"245570352"}}

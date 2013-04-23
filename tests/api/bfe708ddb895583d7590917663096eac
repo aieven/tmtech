@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Content-Language: en
+Content-Type: application/json; charset=utf-8
+Date: Wed, 21 Nov 2012 13:00:30 GMT
+Server: nginx
+Vary: Accept-Language, Cookie, Accept-Encoding
+X-Ratelimit-Limit: 5000
+X-Ratelimit-Remaining: 4436
+Content-Length: 336
+Connection: keep-alive
+
+{"meta":{"code":200},"data":{"username":"fun_quote","bio":"IG bro; tyler_trann7, fun_picture\nPersonal account: x_core91","website":"","profile_picture":"http:\/\/images.instagram.com\/profiles\/profile_41834940_75sq_1349020414.jpg","full_name":"Funny quote","counts":{"media":76,"followed_by":124557,"follows":106705},"id":"41834940"}}

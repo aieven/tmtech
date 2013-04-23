@@ -1,0 +1,104 @@
+<ul class="breadcrumb">
+    <li class="active">Главный экран</li>
+</ul>
+<div class="row-fluid">
+    <div class="span8" style="min-width: 612px;">
+        <div><button type="button" class="btn btn-primary" id="publishSnapshot">Опубликовать в приложении</button></div>
+        <div id="banners"></div>
+        <div id="charts"></div>
+        <div id="tiles"></div>
+    </div>
+    <div class="span4">
+        <ul class="nav nav-tabs">
+            <li id="addBannerNav" class="active"><a href="#addBannerTab" data-toggle="tab">Баннеры<span></span></a></li>
+            <li id="switchChartNav"><a href="#switchChartTab" data-toggle="tab">Чарты<span></span></a></li>
+            <li id="addTileNav"><a href="#addTileTab" data-toggle="tab">Плитка<span></span></a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="addBannerTab" class="tab-pane active">
+                <form action="/<?=$Url->form('admin\\Snapshots', 'uploadBanner');?>" method="post" id="addBannerForm">
+                    <div class="-form-errors-"></div>
+                    <fieldset>
+                        <legend>Добавить баннер</legend>
+                        <div class="control-group -link-">
+                            <label class="control-label" for="bannerLink">Ссылка</label>
+                            <div class="controls">
+                                <input type="text" name="link" class="input-large" id="bannerLink" />
+                                <span class="help-inline -error-"></span>
+                            </div>
+                        </div>
+                        <div class="control-group -img-">
+                            <label class="control-label" for="bannerImg">Баннер 620x329px </label>
+                            <div class="controls">
+                                <input type="file" name="img" class="input-large" id="bannerImg" />
+                                <span class="help-inline -error-"></span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Добавить" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div id="addTileTab" class="tab-pane">
+                <form action="/<?=$Url->form('admin\\Snapshots', 'uploadTile');?>" method="post" id="addTileForm">
+                    <div class="-form-errors-"></div>
+                    <fieldset>
+                        <legend>Добавить баннер</legend>
+                        <div class="control-group -bot_img-">
+                            <label class="control-label" for="tileLink">Ссылка</label>
+                            <div class="controls">
+                                <input type="text" name="link" class="input-large" id="tileLink" />
+                                <span class="help-inline -error-"></span>
+                            </div>
+                        </div>
+                        <div class="control-group -img-">
+                            <label class="control-label" for="tileImg">Нижний баннер 620x192 или 2x305x192 </label>
+                            <div class="controls">
+                                <input type="file" name="img" class="input-large" id="tileImg" />
+                                <span class="help-inline -error-"></span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="hidden" name="tile_type" id="tileType" value="" />
+                            <input type="submit" class="btn btn-primary" value="Добавить" />
+                            <a href="#" class="btn btn-danger" id="deleteLastTile">Удалить последний баннер</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div id="switchChartTab" class="tab-pane">
+                <form action="/<?=$Url->form('admin\\PeopleAndBrands', 'publicData', array( 'partition' => 'people' ));?>" method="post" id="switchChartForm">
+                    <div class="-form-errors-"></div>
+                    <fieldset>
+                        <legend>Изменить чарт</legend>
+                        <div class="control-group -bot_img-">
+                            <label class="control-label" for="chartId">Номер</label>
+                            <div class="controls">
+                                <select name="chart_id" class="input-large" id="chartId">
+                                    <option value="0">Первый</option>
+                                    <option value="1">Второй</option>
+                                    <option value="2">Третий</option>
+                                    <option value="3">Четвертый</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group -bot_img-">
+                            <label class="control-label" for="instagramId">Паблик</label>
+                            <div class="controls">
+                                <select name="instagram_id" class="input-large" id="instagramId">
+                                    <? foreach( $d['publics'] as $public ){?>
+                                    <option value="<?=$public['instagram_id'];?>"><?=$public['full_name'];?></option>
+                                    <?}?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Сохранить" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

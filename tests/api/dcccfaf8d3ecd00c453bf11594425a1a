@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Content-Language: en
+Content-Type: application/json; charset=utf-8
+Date: Mon, 19 Nov 2012 13:49:53 GMT
+Server: nginx
+Vary: Accept-Language, Cookie, Accept-Encoding
+X-Ratelimit-Limit: 5000
+X-Ratelimit-Remaining: 4980
+transfer-encoding: chunked
+Connection: keep-alive
+
+{"meta":{"error_type":"APINotFoundError","code":400,"error_message":"invalid media id"}}

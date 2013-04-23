@@ -1,0 +1,96 @@
+<ul class="breadcrumb">
+    <li class="active">Галереи</li>
+</ul>
+<div class="row-fluid">
+    <div class="span8" style="min-width: 612px;">
+        <div id="gallery">
+            <?php
+                $imgDomain = \Cerceau\System\Registry::instance()->DomainConfig()->sub( 'img' );
+                
+            if(!empty( $d['categories'] )){
+                foreach ( $d['categories'] as $category ){
+                    if( $category['published'] == 0 )
+                        $public = '<a class="-public-"> Опубликовать<i class="icon-plus"></i></a>';
+                    else
+                        $public = '<a class="-unpublic-"> Снять с публикации<i class="icon-minus"></i></a>';
+
+                    echo <<<HTML
+                        <div id="order-{$category['gallery_id']}" class="category" style=" background-image: url($imgDomain{$category['icon']})" data-id="{$category['gallery_id']}" data-name="{$category['name']}">
+                            <a href="/admin/gallery/{$category['gallery_id']}/">
+                                <span style="font-weight: bold">{$category['name']}</span>
+                                <i class="icon-share-alt"></i>
+                            </a>
+                            <span class="pull-right">
+                                $public
+                                <a class="-edit-"> Редактировать<i class="icon-edit"></i></a>
+                                <a class="-delete-"> Удалить<i class="icon-remove"></i></a>
+                            </span>
+                        </div>
+HTML;
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <div class="span4">
+        <form  action="/<?=$Url->form('admin\\Gallery', 'saveCategory');?>" id="addForm" method="post">
+            <fieldset>
+                <div class="-form-errors-"></div>
+                <legend>Добавление галереи</legend>
+                <div class="control-group -name-">
+                    <label class="control-label">Имя категории</label>
+                    <div class="controls">
+                        <input type="text" name="name" class="input-large" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="control-group -img-">
+                    <label class="control-label">Иконка категории 612x132px</label>
+                    <div class="controls">
+                        <input type="file" name="img" class="input-large" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="Добавить" />
+                </div>
+            </fieldset>
+        </form>
+
+        <form  action="/<?=$Url->form('admin\\Gallery', 'editCategory');?>" id="editForm" method="post" style="display: none">
+            <fieldset>
+                <div class="-form-errors-"></div>
+                <legend>Редактирование галереи</legend>
+                <div class="control-group -name-">
+                    <label class="control-label">Имя категории</label>
+                    <div class="controls">
+                        <input type="text" name="name" class="input-large" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="control-group -img-">
+                    <label class="control-label">Иконка категории 620x132px</label>
+                    <div class="controls">
+                        <input type="file" name="img" class="input-large" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="hidden" name="gallery_id" value="" />
+                    <input type="submit" class="btn btn-primary" value="Применить" />
+                    <button class="btn" id="editCancel">Отменить</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<style>
+    .category{
+        height: 152px;
+        width: 612px;
+        position: relative;
+        background-position: bottom;
+        background-repeat: no-repeat;
+        margin-bottom: 30px;
+    }
+</style>

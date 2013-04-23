@@ -1,0 +1,25 @@
+<div class="login">
+    <h3><span style="color:red">АД</span>минко</h3>
+    <form action="/<?= \Cerceau\Utilities\UrlBuilder::instance()->form( 'main' , 'auth' ) ?>" method="post" id="authForm">
+        <div class="-form-errors-"></div>
+        <fieldset>
+            <div class="control-group -email-">
+                <label>Логин</label>
+                <div class="controls">
+                    <input type="text" name="email" class="input-xlarge" />
+                    <span class="help-inline -error-"></span>
+                </div>
+            </div>
+            <div class="control-group -password-">
+                <label>Пароль</label>
+                <div class="controls">
+                    <input type="password" name="password" class="input-xlarge" />
+                    <span class="help-inline -error-"></span>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary btn-large" value="Войти в чертоги">
+        </div>
+    </form>
+</div>

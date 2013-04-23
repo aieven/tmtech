@@ -1,0 +1,130 @@
+<ul data-partition="<?= $d['partition']?>" class="breadcrumb">
+    <li class="active"><?= ucfirst($d['partition'])?></li>
+</ul>
+<div class="row-fluid">
+    <div class="span8">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Категории</th>
+            </tr>
+            </thead>
+            <tbody id="<?= $d['partition']?>">
+            <?php
+                $domain = \Cerceau\System\Registry::instance()->DomainConfig()->sub( 'img' );
+                foreach( $d['cat'] as $cat ){
+                    echo <<<HTML
+                    <tr>
+                        <td>
+                            <div>
+                                <img class="img-rounded" src="{$domain}{$cat['cat_icon']}" alt="" />
+                                <span style="padding-left: 10px;  font-weight: bold">{$cat['cat_name']}</span>
+                                <span class="label" style="margin-left: 10px;">{$cat['publics_count']}</span>
+                                <span class="pull-right"><button class="btn btn-mini btn-info  -subcatView-" type="button" href="category/{$cat['cat_id']}/">Просмотр</button></span>
+HTML;
+                        echo <<<HTML
+                            </div>
+                            <div style="overflow: hidden">
+                                <table class="table table-hover" style="margin-left: 50px; margin-top: 10px;">
+                                    <tbody id="{$cat['cat_id']}" data-cat-name="{$cat['cat_name']}" class="-subcat-">
+HTML;
+                    if( !empty( $cat['sub'] )){
+                        foreach( $cat['sub'] as $sub ){
+                            echo <<<HTML
+                            <tr>
+                                <td>
+                                    <img class="img-rounded" src="{$domain}{$sub['subcat_icon']}" alt="" />
+                                </td>
+                                <td>
+                                    <span style="padding-left: 10px;  font-weight: bold">{$sub['subcat_name']}</span>
+                                    <span class="label" style="margin-left: 10px;">{$sub['publics_count']}</span>
+                                </td>
+                                <td data-subcat-id="{$sub['subcat_id']}" style="text-align: right; padding-right: 60px;">
+                                    <button href="{$sub['subcat_id']}/" class="btn btn-mini btn-info -subcatView-" type="button">Просмотр</button>
+                                    <button class="btn btn-mini btn-warning -subcatEdit-" type="button">Редактировать</button>
+                                    <button class="btn btn-mini btn-danger -subcatDel-" type="button">Удалить</button>
+                                </td>
+                            </tr>
+HTML;
+                        }
+                    }
+                    echo '</tbody></table></td></tr>';
+                }
+            ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <form action="/<?= $Url->form( 'admin\\PeopleAndBrands' , 'subcatAdd', array( 'partition' =>  $d['partition'] )) ?>" id="formAddSubcat" method="post">
+            <fieldset>
+                <legend>Добавить подкатегорию</legend>
+                <div class="control-group -subcat_name-">
+                    <div class="-form-errors-"></div>
+                    <label class="control-label" for="addSubcatName">Название</label>
+                    <div class="controls">
+                        <input type="text" name="subcat_name" class="input-large" id="addSubcatName"/>
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="control-group -img-">
+                    <label class="control-label" for="addSubcatImage">Изображение 144x144</label>
+                    <div class="controls">
+                        <input type="file" name="img" class="input-large" id="addSubcatImage" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="control-group -addSubcatCategory-">
+                    <div class="controls">
+                        <label class="control-label" for="addSubcatCategory">Категория</label>
+                        <select class="span4" id="addSubcatCategory" name="cat_id">
+                            <?php foreach( $d['cat'] as $cat )
+                                echo '<option value="'.$cat['cat_id'].'">'.$cat['cat_name'].'</option>' ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="Добавить" />
+                </div>
+            </fieldset>
+        </form>
+        <form action="/<?= $Url->form( 'admin\\PeopleAndBrands' , 'subcatEdit', array( 'partition' =>  $d['partition'] )) ?>" id="formEditSubcat" method="post" style="display: none">
+            <div class="control-group -subcat_name-">
+            <fieldset>
+                <legend></legend>
+                <div class="-form-errors-"></div>
+                <div class="control-group -subcat_name-">
+                    <label class="control-label" for="editSubcatName">Название</label>
+                    <div class="controls">
+                        <input type="text" name="subcat_name" class="input-large" id="editSubcatName"/>
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="control-group -img-">
+                    <label class="control-label" for="editSubcatImage">Изображение 144x144</label>
+                    <div class="controls">
+                        <input type="file" name="img" class="input-large" id="editSubcatImage" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="control-group -editSubcatCategory-">
+                    <div class="controls">
+                        <label class="control-label" for="editSubcatCategory">Категория</label>
+                        <select class="span4" id="editSubcatCategory" name="cat_id">
+                            <?php foreach( $d['cat'] as $cat )
+                                echo '<option value="'.$cat['cat_id'].'">'.$cat['cat_name'].'</option>' ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group -editSubcatId-">
+                    <input type="hidden" name="subcat_id" class="input-large" value="" id="editSubcatId" />
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="Редактировать" />
+                    <button id="subcatEditCancel" class="btn">Отменить</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+

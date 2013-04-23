@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+Content-Language: en
+Content-Type: application/json; charset=utf-8
+Date: Wed, 21 Nov 2012 13:00:26 GMT
+Server: nginx
+Vary: Accept-Language, Cookie, Accept-Encoding
+X-Ratelimit-Limit: 5000
+X-Ratelimit-Remaining: 4439
+Content-Length: 297
+Connection: keep-alive
+
+{"meta":{"code":200},"data":{"username":"truejokes","bio":"True jokes from Russia","website":"","profile_picture":"http:\/\/images.instagram.com\/profiles\/profile_222936588_75sq_1348655485.jpg","full_name":"True Jokes","counts":{"media":57,"followed_by":74376,"follows":212515},"id":"222936588"}}

@@ -1,0 +1,118 @@
+<ul data-partition="<?= $d['info']['partition']?>" class="breadcrumb">
+    <li><a href="/<?= $Url->page( 'admin\\PeopleAndBrands', 'categories', $d['info'] ) ?>"><?= ucfirst($d['info']['partition']); ?></a></li><span class="divider">/</span></li>
+    <li class="active"><?= ucfirst($d['info']['name']); ?></li>
+</ul>
+<div class="row-fluid">
+    <div class="span8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Аватар</th>
+                    <th>Ник</th>
+                    <th>Полное имя</th>
+                    <th>Фолловеры</th>
+                <?php
+                if( $d['info']['partition'] == 'people' )
+                    echo <<<HTML
+                    <th>Фото</th>
+                    <th>Лайки</th>
+                    <th>Комментарии</th>
+HTML;
+                ?>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="publics">
+        <?php
+            foreach( $d['publics'] as $public ){
+                if( $public['full_name'] == 'parse_error' ){
+                    $public['followers'] = $public['photos'] = $public['likes'] = $public['comments'] = '';
+                    $errorStyle = ' style="color:red;"';
+                    $fullName = '<button class="btn btn-mini btn-info -restore-" type="button">Попробовать снова</button>';
+                }
+                else {
+                    $errorStyle = '';
+                    $fullName = <<<HTML
+    <a href="#" class="-edit-"><span class="-full-name-">{$public['full_name']}</span> <i class="icon-edit"></i></a>
+HTML;
+                }
+
+                $peopleFields = $d['info']['partition'] == 'brands' ? '' : <<<HTML
+    <td>{$public['photos']}</td>
+    <td>{$public['likes']}</td>
+    <td>{$public['comments']}</td>
+HTML;
+
+                echo <<<HTML
+            <tr data-id="{$public['public_id']}" id="public_{$public['public_id']}">
+                <td>
+                    <img class="img-rounded" src="{$public['profile_picture']}" alt="" />
+                </td>
+                <td>
+                    <a id="userName" data-city-id="20335" target="_blank" href="http://instagram.com/{$public['username']}">
+                        <span>{$public['username']}</span>
+                        <i class="icon-share-alt"></i>
+                    </a>
+                </td>
+                <td {$errorStyle}>$fullName</td>
+                <td>{$public['followers']}</td>
+                $peopleFields
+                <td>
+                    <button class="btn btn-mini btn-danger -delete-" type="button">Удалить</button>
+                </td>
+            </tr>
+HTML;
+            }
+        ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <?php
+            $addUrl = $Url->form( 'admin\\PeopleAndBrands' , 'publicAdd', array( 'partition' => $d['info']['partition'] ));
+            $editUrl = $Url->form( 'admin\\PeopleAndBrands' , 'publicEdit', array( 'partition' => $d['info']['partition'] ));
+            $subcatId = isset( $d['info']['subcat_id'] ) ? $d['info']['subcat_id'] : 0;
+
+            echo <<<HTML
+        <form action="/$addUrl" id="formAddPublic" method="post">
+            <fieldset>
+                <legend>Добавить паблик</legend>
+                <div class="-form-errors-"></div>
+                <div class="control-group -username-">
+                    <label class="control-label">Имя пользователя</label>
+                    <div class="controls">
+                        <input type="text" name="username" class="input-large" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="hidden" name="cat_id" value="{$d['info']['cat_id']}" />
+                    <input type="hidden" name="subcat_id" value="$subcatId" />
+                    <input type="submit" class="btn btn-primary" value="Добавить" />
+                </div>
+            </fieldset>
+        </form>
+
+        <form action="/$editUrl" id="formEditPublic" method="post" style="display:none;">
+            <fieldset>
+                <legend>Редактировать паблик</legend>
+                <div class="-form-errors-"></div>
+                <div class="control-group -full_name-">
+                    <label class="control-label">Имя пользователя</label>
+                    <div class="controls">
+                        <input type="text" name="full_name" class="input-large" />
+                        <span class="help-inline -error-"></span>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="hidden" name="public_id" />
+                    <input type="submit" class="btn btn-primary" value="Применить" />
+                </div>
+            </fieldset>
+        </form>
+HTML;
+        ?>
+    </div>
+</div>
+
+
